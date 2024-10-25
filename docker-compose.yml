@@ -1,0 +1,28 @@
+services:
+  frontend:
+    build:
+      context: ./packages/client
+      dockerfile: Dockerfile
+    container_name: snippetbox_frontend
+    ports:
+      - "3000:3000"
+  backend:
+    build:
+      context: ./packages/server
+      dockerfile: Dockerfile
+    container_name: snippetbox_backend
+    ports:
+      - "8080:8080"
+  db:
+    image: postgres:latest
+    container_name: snippetbox_db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+volumes:
+  postgres_data:
+    driver: local
